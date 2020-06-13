@@ -1,0 +1,17 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  host: localhost
+
+development:
+  <<: *default
+  database: web_scraper_development
+
+test: &test
+  <<: *default
+  database: web_scraper_test
+
+production:
+  <<: *default
+  database: web_scraper_production
