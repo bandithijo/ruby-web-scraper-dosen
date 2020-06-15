@@ -1,6 +1,7 @@
 require 'httparty'
 require 'nokogiri'
 require 'byebug'
+require 'pg'
 
 def scraper
   target_url = "http://baak.universitasmulia.ac.id/dosen/"
@@ -10,8 +11,8 @@ def scraper
   dosen_listings = parsed_page.css('div.elementor-widget-wrap')
   dosen_listings.each do |dosen_list|
     dosen = {
-      nama_dosen: dosen_list.css("h2")[0]&.text,
-      nidn_dosen: dosen_list.css("h2")[1]&.text
+      nama_dosen: dosen_list.css("h2")[0]&.text&.gsub("\n", "")&.gsub(/'/, "`")&.squeeze,
+      nidn_dosen: dosen_list.css("h2")[1]&.text&.gsub("\n", "")
     }
     if dosen[:nama_dosen] != nil
       dosens << dosen
@@ -19,26 +20,25 @@ def scraper
   end
   # byebug
 
-  File.delete("daftar_dosen.html") if File.exist?("daftar_dosen.html")
-  File.open("daftar_dosen.html", "w") do |f|
-    f.puts '<!DOCTYPE html>'
-    f.puts '<html lang="en">'
-    f.puts '<head>'
-    f.puts '<meta charset="UTF-8">'
-    f.puts "<title>Daftar Dosen Universitas Mulia (#{dosens.count} dosen)</title>"
-    f.puts '<style>table,th,td{border:1px solid black;border-collapse:collapse;}</style>'
-    f.puts '</head>'
-    f.puts '<body>'
-    f.puts '<table>'
-    dosens.each do |dosen|
-      f.puts '<tr>'
-      f.puts "<td>#{dosen[:nama_dosen]}</td>"
-      f.puts "<td>#{dosen[:nidn_dosen]}</td>"
-      f.puts '</tr>'
+  begin
+    conn = PG::Connection.open(dbname: 'web_scraper')
+    conn.exec("DROP TABLE IF EXISTS daftar_dosens")
+    conn.exec("CREATE TABLE daftar_dosens(
+              id BIGSERIAL NOT NULL PRIMARY KEY,
+              nama_dosen VARCHAR(100) NOT NULL,
+              nidn_dosen VARCHAR(10))")
+
+    dosens.each.with_index(1) do |dosen, index|
+      conn.exec("INSERT INTO daftar_dosens VALUES(
+               #{index},
+               '#{dosen[:nama_dosen]}',
+               '#{dosen[:nidn_dosen]}')")
+      puts "Dosen: #{index} - #{dosen[:nama_dosen]}, berhasil diinput!"
     end
-    f.puts '</table>'
-    f.puts '</body>'
-    f.puts '</html>'
+  rescue PG::Error => e
+    puts e.message
+  ensure
+    conn.close if conn
   end
 
   puts "TOTAL DOSEN: #{dosens.count} orang"
