@@ -1,0 +1,6 @@
+development:
+  adapter: postgresql
+  database: web_scraper_development
+  pool: 5
+  host: localhost
+  encoding: unicode
