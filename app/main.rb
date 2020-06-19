@@ -32,14 +32,18 @@ def scraper
   if dosens.size == DaftarDosen.all.size
     puts "INFO: Data Dosen sudah diparsing. Tidak ada data baru."
     puts "TOTAL DOSEN: #{DaftarDosen.all.size} dosen"
-  elsif DaftarDosen.all.size == 0 || dosens.size > DaftarDosen.all.size
-    total_dosen_lama = DaftarDosen.all.size
+  elsif DaftarDosen.all.size.nil? || dosens.size > DaftarDosen.all.size
+    unless DaftarDosen.all.size.nil?
+      total_dosen_lama = DaftarDosen.all.size
 
-    rake = Rake.application
-    rake.init
-    rake.load_rakefile
-    rake['db:rollback'].invoke
-    rake['db:migrate'].invoke
+      rake = Rake.application
+      rake.init
+      rake.load_rakefile
+      rake['db:rollback'].invoke
+      rake['db:migrate'].invoke
+    else
+      total_dosen_lama = 0
+    end
 
     dosens.each do |dosen|
       DaftarDosen.create(nama_dosen: dosen[:nama_dosen], nidn_dosen: dosen[:nidn_dosen])
@@ -48,7 +52,7 @@ def scraper
 
     puts "TOTAL DOSEN (remote): #{dosens.size} dosen"
     puts "TOTAL DOSEN (local) : #{DaftarDosen.all.size} dosen"
-    puts "TOTAL DOSEN BARU    : #{dosens.size - total_dosen_lama} dosen"
+    puts "TOTAL DOSEN BARU    : #{dosens.size - total_dosen_lama} dosen" if total_dosen_lama != 0
   end
 end
 
