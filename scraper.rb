@@ -1,6 +1,7 @@
 require 'httparty'
 require 'nokogiri'
 require 'byebug'
+require 'date'
 
 def scraper
   target_url = "http://baak.universitasmulia.ac.id/dosen/"
@@ -26,12 +27,15 @@ def scraper
     f.puts '<head>'
     f.puts '<meta charset="UTF-8">'
     f.puts "<title>Daftar Dosen Universitas Mulia (#{dosens.count} dosen)</title>"
-    f.puts '<style>table,th,td{border:1px solid black;border-collapse:collapse;}</style>'
+    f.puts '<style>table,th,td{border:1px solid black;border-collapse:collapse;}'
+    f.puts 'td{padding:3px;}</style>'
     f.puts '</head>'
     f.puts '<body>'
+    f.puts "<p>Data terakhir diparsing: #{Date.today}</p>"
     f.puts '<table>'
-    dosens.each do |dosen|
+    dosens.each.with_index(1) do |dosen, index|
       f.puts '<tr>'
+      f.puts "<td>#{index}</td>"
       f.puts "<td>#{dosen[:nama_dosen]}</td>"
       f.puts "<td>#{dosen[:nidn_dosen]}</td>"
       f.puts '</tr>'
