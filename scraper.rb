@@ -10,7 +10,7 @@ def scraper
   dosens = Array.new
   dosen_listings = parsed_page.css('div.elementor-widget-wrap p')
   dosen_listings[1..-2].each do |dosen_list|
-    nama_nidn_dosen = dosen_list&.text&.gsub(/^\w.*?:/, "")&.gsub("NIDN : ", "").squeeze
+    nama_nidn_dosen = dosen_list&.text&.gsub(/(^\w.*?:)|(NIDN :\s)/, "").squeeze
     dosen = {
       nama_dosen: nama_nidn_dosen&.gsub(/[^A-Za-z., ]/i, ''),
       nidn_dosen: nama_nidn_dosen&.gsub(/[^0-9]/i, '')
