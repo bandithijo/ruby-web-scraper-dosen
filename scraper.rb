@@ -156,6 +156,7 @@ def scraper
 
     f.puts '''
     <script>
+    // Sumber: https://www.w3schools.com/howto/howto_js_tabs.asp
     function openTab(evt, tabNumber) {
       var i, tabcontent, tablinks;
       tabcontent = document.getElementsByClassName("tabcontent");
@@ -170,6 +171,7 @@ def scraper
       evt.currentTarget.className += " active";
     }
 
+    // Sumber: https://www.w3schools.com/howto/howto_js_filter_table.asp
     function cariDosens() {
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("inputDosens");
