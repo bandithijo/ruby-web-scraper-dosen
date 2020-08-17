@@ -58,10 +58,10 @@ def scraper
     f.puts '<head>'
     f.puts '<meta charset="UTF-8">'
     f.puts '<meta name="viewport" content="width=device-width, initial-scale=1">'
-    f.puts "<title>Daftar Dosen Universitas Mulia (#{dosens.count} dosen)</title>"
+    f.puts "<title>Daftar Dosen Universitas Mulia Balikpapan(#{dosens.count} dosen)</title>"
     f.puts '</head>'
     f.puts '<body>'
-    f.puts '<h1>Daftar Dosen<br>Universitas Mulia Balikpapan</h1>'
+    f.puts '<h1>Daftar Dosen UM BPPN</h1>'
     f.puts "<p>Data terakhir diparsing: #{Date.today}</p>"
 
     f.puts '''
@@ -121,7 +121,7 @@ def scraper
     f.puts '''
     <style>
     body {
-      font-size: 11px;
+      font-size: 12px;
     }
     table,th,td {
       border: 1px solid black;
@@ -157,6 +157,8 @@ def scraper
       padding: 0;
       border: 1px solid #ffffff;
       margin: 0 0 10px 0;
+      font-family: inherit;
+      font-size: 12px;
     }
     @media screen and (width: 360px) {
       table, #inputDosens, #inputDosensPria, #inputDosensWanita {
