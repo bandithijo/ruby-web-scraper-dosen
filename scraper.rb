@@ -14,7 +14,7 @@ def scraper
   dosen_listings[1..-2].each do |dosen_list|
     nama_nidn_dosen = dosen_list&.text&.gsub(/(^\w.*?:)|(NIDN :\s)/, "").strip
     dosen = {
-      nama_dosen: nama_nidn_dosen&.gsub(/[^A-Za-z., ]/i, ''),
+      nama_dosen: nama_nidn_dosen&.gsub(/[^A-Za-z.,’ ]/i, ''),
       nidn_dosen: nama_nidn_dosen&.gsub(/[^0-9]/i, '')
     }
     if dosen[:nama_dosen] != nil
