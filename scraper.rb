@@ -72,10 +72,10 @@ def scraper
     f.puts '<div id="tab1" class="tabcontent active">'
     f.puts '<h2>Daftar Semua Dosen</h2>'
     f.puts "<p>Jumlah Seluruh Dosen: #{dosens.size} orang</p>"
-    f.puts '<table>'
+    f.puts '<input type="text" id="inputDosens" onkeyup="cariDosens()" placeholder="Cari nama dosen..">'
+    f.puts '<table id="tableDosens">'
     dosens.each.with_index(1) do |dosen, index|
       f.puts '<tr>'
-      f.puts "<td>#{index}</td>"
       f.puts "<td>#{dosen[:nama_dosen]}</td>"
       f.puts "<td>#{dosen[:nidn_dosen]}</td>"
       f.puts '</tr>'
@@ -86,10 +86,10 @@ def scraper
     f.puts '<div id="tab2" class="tabcontent">'
     f.puts '<h2>Daftar Dosen Pria</h2>'
     f.puts "<p>Jumlah Dosen Pria: #{dosens_pria.size} orang</p>"
-    f.puts '<table>'
+    f.puts '<input type="text" id="inputDosensPria" onkeyup="cariDosensPria()" placeholder="Cari nama dosen pria..">'
+    f.puts '<table id="tableDosensPria">'
     dosens_pria.each.with_index(1) do |dosen, index|
       f.puts '<tr>'
-      f.puts "<td>#{index}</td>"
       f.puts "<td>#{dosen[:nama_dosen_pria]}</td>"
       f.puts "<td>#{dosen[:nidn_dosen_pria]}</td>"
       f.puts '</tr>'
@@ -100,10 +100,10 @@ def scraper
     f.puts '<div id="tab3" class="tabcontent">'
     f.puts '<h2>Daftar Dosen Wanita</h2>'
     f.puts "<p>Jumlah Dosen Wanita: #{dosens_wanita.size} orang</p>"
-    f.puts '<table>'
+    f.puts '<input type="text" id="inputDosensWanita" onkeyup="cariDosensWanita()" placeholder="Cari nama dosen wanita..">'
+    f.puts '<table id="tableDosensWanita">'
     dosens_wanita.each.with_index(1) do |dosen, index|
       f.puts '<tr>'
-      f.puts "<td>#{index}</td>"
       f.puts "<td>#{dosen[:nama_dosen_wanita]}</td>"
       f.puts "<td>#{dosen[:nidn_dosen_wanita]}</td>"
       f.puts '</tr>'
@@ -145,6 +145,12 @@ def scraper
     .tabcontent {
       display: none;
     }
+    #inputDosens, #inputDosensPria, #inputDosensWanita {
+      width: 30%;
+      padding: 0;
+      border: 1px solid #ffffff;
+      margin: 0 0 10px 0;
+    }
     </style>
     '''
 
@@ -162,6 +168,63 @@ def scraper
       }
       document.getElementById(tabNumber).style.display = "block";
       evt.currentTarget.className += " active";
+    }
+
+    function cariDosens() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("inputDosens");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("tableDosens");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+
+    function cariDosensPria() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("inputDosensPria");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("tableDosensPria");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+
+    function cariDosensWanita() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("inputDosensWanita");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("tableDosensWanita");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
     }
     </script>
     '''
