@@ -8,11 +8,12 @@ def scraper
   unparsed_page = HTTParty.get(target_url)
   parsed_page = Nokogiri::HTML(unparsed_page)
   dosens = Array.new
-  dosen_listings = parsed_page.css('div.elementor-widget-wrap')
-  dosen_listings.each do |dosen_list|
+  dosen_listings = parsed_page.css('div.elementor-widget-wrap p')
+  dosen_listings[1..-2].each do |dosen_list|
+    nama_nidn_dosen = dosen_list&.text&.gsub(/(^\w.*?:)|(NIDN :\s)/, "").strip
     dosen = {
-      nama_dosen: dosen_list.css("h2")[0]&.text,
-      nidn_dosen: dosen_list.css("h2")[1]&.text
+      nama_dosen: nama_nidn_dosen&.gsub(/[^A-Za-z., ]/i, ''),
+      nidn_dosen: nama_nidn_dosen&.gsub(/[^0-9]/i, '')
     }
     if dosen[:nama_dosen] != nil
       dosens << dosen
