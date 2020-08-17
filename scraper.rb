@@ -7,6 +7,8 @@ def scraper
   target_url = "http://baak.universitasmulia.ac.id/dosen/"
   unparsed_page = HTTParty.get(target_url)
   parsed_page = Nokogiri::HTML(unparsed_page)
+
+  # daftar semua dosen
   dosens = Array.new
   dosen_listings = parsed_page.css('div.elementor-widget-wrap p')
   dosen_listings[1..-2].each do |dosen_list|
@@ -19,7 +21,35 @@ def scraper
       dosens << dosen
     end
   end
-  # byebug
+
+  # daftar dosen pria
+  dosens_pria = Array.new
+  dosen_pria_listings = parsed_page.css('div.elementor-widget-wrap')[9].css('p')
+  dosen_pria_listings.each do |dosen_pria_list|
+    nama_nidn_dosen_pria = dosen_pria_list&.text&.gsub(/(^\w.*?:)|(NIDN :\s)/, "").strip
+    dosen = {
+      nama_dosen_pria: nama_nidn_dosen_pria&.gsub(/[^A-Za-z., ]/i, ''),
+      nidn_dosen_pria: nama_nidn_dosen_pria&.gsub(/[^0-9]/i, '')
+    }
+    if dosen[:nama_dosen_pria] != nil
+      dosens_pria << dosen
+    end
+  end
+
+  # daftar dosen wanita
+  dosens_wanita = Array.new
+  dosen_wanita_listings = parsed_page.css('div.elementor-widget-wrap')[10].css('p')
+  dosen_wanita_listings.each do |dosen_wanita_list|
+    nama_nidn_dosen_wanita = dosen_wanita_list&.text&.gsub(/(^\w.*?:)|(NIDN :\s)/, "").strip
+    dosen = {
+      nama_dosen_wanita: nama_nidn_dosen_wanita&.gsub(/[^A-Za-z., ]/i, ''),
+      nidn_dosen_wanita: nama_nidn_dosen_wanita&.gsub(/[^0-9]/i, '')
+    }
+    if dosen[:nama_dosen_wanita] != nil
+      dosens_wanita << dosen
+    end
+  end
+  byebug
 
   File.delete("daftar_dosen.html") if File.exist?("daftar_dosen.html")
   File.open("daftar_dosen.html", "w") do |f|
