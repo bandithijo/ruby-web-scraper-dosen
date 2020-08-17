@@ -241,3 +241,4 @@ def scraper
 end
 
 scraper
+puts "index.html created!" if %x(cp -f daftar_dosen.html index.html)
