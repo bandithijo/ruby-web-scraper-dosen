@@ -63,6 +63,12 @@ def scraper
     f.puts '<h1>Daftar Dosen<br>Universitas Mulia Balikpapan</h1>'
     f.puts "<p>Data terakhir diparsing: #{Date.today}</p>"
 
+    f.puts '''
+    <p>Made with ❤ by <a href="https://bandithijo.github.io">Rizqi Nur Assyaufi</a> - 2020/07/12<br>
+    Powered by <a href="http://ruby-lang.org">Ruby</a> |
+    Source Code on <a href="https://github.com/bandithijo/ruby-web-scraper-dosen">GitHub</a></p>
+    '''
+
     f.puts '<div class="tab">'
     f.puts "<button class='tablinks' onclick=\"openTab(event, 'tab1')\">Semua Dosen</button>"
     f.puts "<button class='tablinks' onclick=\"openTab(event, 'tab2')\">Dosen Pria</button>"
@@ -150,6 +156,11 @@ def scraper
       padding: 0;
       border: 1px solid #ffffff;
       margin: 0 0 10px 0;
+    }
+    @media screen and (width: 360px) {
+      table, #inputDosens, #inputDosensPria, #inputDosensWanita {
+        width: 100%;
+      }
     }
     </style>
     '''
