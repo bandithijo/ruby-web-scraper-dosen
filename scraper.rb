@@ -58,13 +58,18 @@ def scraper
     f.puts '<head>'
     f.puts '<meta charset="UTF-8">'
     f.puts "<title>Daftar Dosen Universitas Mulia (#{dosens.count} dosen)</title>"
-    f.puts '<style>table,th,td{border:1px solid black;border-collapse:collapse;}'
-    f.puts 'td{padding:3px;}</style>'
     f.puts '</head>'
     f.puts '<body>'
-    f.puts '<h1>Daftar Dosen Universitas Mulia Balikpapan</h1>'
+    f.puts '<h1>Daftar Dosen<br>Universitas Mulia Balikpapan</h1>'
     f.puts "<p>Data terakhir diparsing: #{Date.today}</p>"
 
+    f.puts '<div class="tab">'
+    f.puts "<button class='tablinks' onclick=\"openTab(event, 'tab1')\">Semua Dosen</button>"
+    f.puts "<button class='tablinks' onclick=\"openTab(event, 'tab2')\">Dosen Pria</button>"
+    f.puts "<button class='tablinks' onclick=\"openTab(event, 'tab3')\">Dosen Wanita</button>"
+    f.puts '</div>'
+
+    f.puts '<div id="tab1" class="tabcontent active">'
     f.puts '<h2>Daftar Semua Dosen</h2>'
     f.puts "<p>Jumlah Seluruh Dosen: #{dosens.size} orang</p>"
     f.puts '<table>'
@@ -76,7 +81,9 @@ def scraper
       f.puts '</tr>'
     end
     f.puts '</table>'
+    f.puts '</div>'
 
+    f.puts '<div id="tab2" class="tabcontent">'
     f.puts '<h2>Daftar Dosen Pria</h2>'
     f.puts "<p>Jumlah Dosen Pria: #{dosens_pria.size} orang</p>"
     f.puts '<table>'
@@ -88,7 +95,9 @@ def scraper
       f.puts '</tr>'
     end
     f.puts '</table>'
+    f.puts '</div>'
 
+    f.puts '<div id="tab3" class="tabcontent">'
     f.puts '<h2>Daftar Dosen Wanita</h2>'
     f.puts "<p>Jumlah Dosen Wanita: #{dosens_wanita.size} orang</p>"
     f.puts '<table>'
@@ -100,6 +109,62 @@ def scraper
       f.puts '</tr>'
     end
     f.puts '</table>'
+    f.puts '</div>'
+
+    f.puts '''
+    <style>
+    body {
+      font-size: 11px;
+    }
+    table,th,td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    td {
+      padding: 3px;
+    }
+    .tab {
+      overflow: hidden;
+    }
+    .tab button {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 5px 5px 5px 0;
+      transition: 0.3s;
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      margin-right: 10px;
+    }
+    .tab button.active {
+      text-decoration: underline;
+    }
+    .tabcontent {
+      display: none;
+    }
+    </style>
+    '''
+
+    f.puts '''
+    <script>
+    function openTab(evt, tabNumber) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(tabNumber).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+    </script>
+    '''
 
     f.puts '</body>'
     f.puts '</html>'

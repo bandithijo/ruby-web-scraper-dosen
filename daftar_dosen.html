@@ -3,12 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Daftar Dosen Universitas Mulia (128 dosen)</title>
-<style>table,th,td{border:1px solid black;border-collapse:collapse;}
-td{padding:3px;}</style>
 </head>
 <body>
-<h1>Daftar Dosen Universitas Mulia Balikpapan</h1>
+<h1>Daftar Dosen<br>Universitas Mulia Balikpapan</h1>
 <p>Data terakhir diparsing: 2020-08-17</p>
+<div class="tab">
+<button class='tablinks' onclick="openTab(event, 'tab1')">Semua Dosen</button>
+<button class='tablinks' onclick="openTab(event, 'tab2')">Dosen Pria</button>
+<button class='tablinks' onclick="openTab(event, 'tab3')">Dosen Wanita</button>
+</div>
+<div id="tab1" class="tabcontent active">
 <h2>Daftar Semua Dosen</h2>
 <p>Jumlah Seluruh Dosen: 128 orang</p>
 <table>
@@ -653,6 +657,8 @@ td{padding:3px;}</style>
 <td>1103039301</td>
 </tr>
 </table>
+</div>
+<div id="tab2" class="tabcontent">
 <h2>Daftar Dosen Pria</h2>
 <p>Jumlah Dosen Pria: 78 orang</p>
 <table>
@@ -1047,6 +1053,8 @@ td{padding:3px;}</style>
 <td>0903048202</td>
 </tr>
 </table>
+</div>
+<div id="tab3" class="tabcontent">
 <h2>Daftar Dosen Wanita</h2>
 <p>Jumlah Dosen Wanita: 50 orang</p>
 <table>
@@ -1301,5 +1309,59 @@ td{padding:3px;}</style>
 <td>1103039301</td>
 </tr>
 </table>
+</div>
+
+    <style>
+    body {
+      font-size: 11px;
+    }
+    table,th,td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    td {
+      padding: 3px;
+    }
+    .tab {
+      overflow: hidden;
+    }
+    .tab button {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 5px 5px 5px 0;
+      transition: 0.3s;
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      margin-right: 10px;
+    }
+    .tab button.active {
+      text-decoration: underline;
+    }
+    .tabcontent {
+      display: none;
+    }
+    </style>
+    
+
+    <script>
+    function openTab(evt, tabNumber) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(tabNumber).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+    </script>
+    
 </body>
 </html>
