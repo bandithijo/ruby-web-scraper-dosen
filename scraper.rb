@@ -49,7 +49,7 @@ def scraper
       dosens_wanita << dosen
     end
   end
-  byebug
+  # byebug
 
   File.delete("daftar_dosen.html") if File.exist?("daftar_dosen.html")
   File.open("daftar_dosen.html", "w") do |f|
@@ -62,7 +62,11 @@ def scraper
     f.puts 'td{padding:3px;}</style>'
     f.puts '</head>'
     f.puts '<body>'
+    f.puts '<h1>Daftar Dosen Universitas Mulia Balikpapan</h1>'
     f.puts "<p>Data terakhir diparsing: #{Date.today}</p>"
+
+    f.puts '<h2>Daftar Semua Dosen</h2>'
+    f.puts "<p>Jumlah Seluruh Dosen: #{dosens.size} orang</p>"
     f.puts '<table>'
     dosens.each.with_index(1) do |dosen, index|
       f.puts '<tr>'
@@ -72,11 +76,38 @@ def scraper
       f.puts '</tr>'
     end
     f.puts '</table>'
+
+    f.puts '<h2>Daftar Dosen Pria</h2>'
+    f.puts "<p>Jumlah Dosen Pria: #{dosens_pria.size} orang</p>"
+    f.puts '<table>'
+    dosens_pria.each.with_index(1) do |dosen, index|
+      f.puts '<tr>'
+      f.puts "<td>#{index}</td>"
+      f.puts "<td>#{dosen[:nama_dosen_pria]}</td>"
+      f.puts "<td>#{dosen[:nidn_dosen_pria]}</td>"
+      f.puts '</tr>'
+    end
+    f.puts '</table>'
+
+    f.puts '<h2>Daftar Dosen Wanita</h2>'
+    f.puts "<p>Jumlah Dosen Wanita: #{dosens_wanita.size} orang</p>"
+    f.puts '<table>'
+    dosens_wanita.each.with_index(1) do |dosen, index|
+      f.puts '<tr>'
+      f.puts "<td>#{index}</td>"
+      f.puts "<td>#{dosen[:nama_dosen_wanita]}</td>"
+      f.puts "<td>#{dosen[:nidn_dosen_wanita]}</td>"
+      f.puts '</tr>'
+    end
+    f.puts '</table>'
+
     f.puts '</body>'
     f.puts '</html>'
   end
 
-  puts "TOTAL DOSEN: #{dosens.count} orang"
+  puts "TOTAL SELURUH DOSEN : #{dosens.count} orang"
+  puts "TOTAL DOSEN PRIA    : #{dosens_pria.count} orang"
+  puts "TOTAL DOSEN WANITA  : #{dosens_wanita.count} orang"
 end
 
 scraper
