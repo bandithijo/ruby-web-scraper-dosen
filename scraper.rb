@@ -57,6 +57,7 @@ def scraper
     f.puts '<html lang="en">'
     f.puts '<head>'
     f.puts '<meta charset="UTF-8">'
+    f.puts '<meta name="viewport" content="width=device-width, initial-scale=1">'
     f.puts "<title>Daftar Dosen Universitas Mulia (#{dosens.count} dosen)</title>"
     f.puts '</head>'
     f.puts '<body>'
