@@ -78,7 +78,7 @@ def scraper
 
     f.puts '<div id="tab1" class="tabcontent active">'
     f.puts '<h2>Daftar Semua Dosen</h2>'
-    f.puts "<p>Jumlah Seluruh Dosen: #{dosens.size} orang</p>"
+    f.puts "<p style='margin-top:-12px;'>Jumlah Seluruh Dosen: #{dosens.size} orang</p>"
     f.puts '<input type="text" id="inputDosens" onkeyup="cariDosens()" placeholder="Cari nama dosen..">'
     f.puts '<table id="tableDosens">'
     dosens.each.with_index(1) do |dosen, index|
@@ -92,7 +92,7 @@ def scraper
 
     f.puts '<div id="tab2" class="tabcontent">'
     f.puts '<h2>Daftar Dosen Pria</h2>'
-    f.puts "<p>Jumlah Dosen Pria: #{dosens_pria.size} orang</p>"
+    f.puts "<p style='margin-top:-12px;'>Jumlah Dosen Pria: #{dosens_pria.size} orang</p>"
     f.puts '<input type="text" id="inputDosensPria" onkeyup="cariDosensPria()" placeholder="Cari nama dosen pria..">'
     f.puts '<table id="tableDosensPria">'
     dosens_pria.each.with_index(1) do |dosen, index|
@@ -106,7 +106,7 @@ def scraper
 
     f.puts '<div id="tab3" class="tabcontent">'
     f.puts '<h2>Daftar Dosen Wanita</h2>'
-    f.puts "<p>Jumlah Dosen Wanita: #{dosens_wanita.size} orang</p>"
+    f.puts "<p style='margin-top:-12px;'>Jumlah Dosen Wanita: #{dosens_wanita.size} orang</p>"
     f.puts '<input type="text" id="inputDosensWanita" onkeyup="cariDosensWanita()" placeholder="Cari nama dosen wanita..">'
     f.puts '<table id="tableDosensWanita">'
     dosens_wanita.each.with_index(1) do |dosen, index|
@@ -121,6 +121,7 @@ def scraper
     f.puts '''
     <style>
     body {
+      font-family: Arial;
       font-size: 12px;
     }
     table,th,td {
@@ -159,7 +160,7 @@ def scraper
       width: 30%;
       padding: 0;
       border: 1px solid #ffffff;
-      margin: 0 0 10px 0;
+      margin: 0 0 12px 0;
       font-family: inherit;
       font-size: 12px;
     }
