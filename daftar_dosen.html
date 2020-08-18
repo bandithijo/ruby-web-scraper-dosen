@@ -1065,16 +1065,34 @@
 </div>
 
     <style>
+    :root {
+      --fg-color: #000;
+      --bg-color: #fff;
+      --a-color: #0000ff;
+    }
+    ::placeholder {
+      color: var(--fg-color);
+      opacity: 0.5;
+    }
     body {
+      background-color: var(--bg-color);
+      color: var(--fg-color);
       font-family: Arial;
       font-size: 12px;
     }
+    a, a:visited {
+      color: var(--a-color);
+    }
     table,th,td {
-      border: 1px solid black;
+      border: 1px solid var(--fg-color);
       border-collapse: collapse;
     }
     td {
       padding: 3px;
+    }
+    td:nth-child(2) {
+      font-family: monospace;
+      text-align: center;
     }
     .tab {
       overflow: hidden;
@@ -1099,12 +1117,15 @@
       display: none;
     }
     input:focus, textarea:focus, select:focus{
+      background-color: var(--bg-color);
+      color: var(--fg-color);
       outline: none;
     }
     #inputDosens, #inputDosensPria, #inputDosensWanita {
+      background-color: var(--bg-color);
       width: 30%;
       padding: 0;
-      border: 1px solid #ffffff;
+      border: 1px solid var(--bg-color);
       margin: 0 0 12px 0;
       font-family: inherit;
       font-size: 12px;
