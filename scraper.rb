@@ -152,6 +152,9 @@ def scraper
     .tabcontent {
       display: none;
     }
+    input:focus, textarea:focus, select:focus{
+      outline: none;
+    }
     #inputDosens, #inputDosensPria, #inputDosensWanita {
       width: 30%;
       padding: 0;
