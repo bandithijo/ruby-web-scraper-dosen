@@ -93,7 +93,7 @@ def scraper
     f.puts '<div id="tab2" class="tabcontent">'
     f.puts '<h2>Daftar Dosen Pria</h2>'
     f.puts "<p style='margin-top:-12px;'>Jumlah Dosen Pria: #{dosens_pria.size} orang</p>"
-    f.puts '<input type="text" id="inputDosensPria" onkeyup="cariDosensPria()" placeholder="Cari nama dosen pria..">'
+    f.puts '<input type="text" id="inputDosensPria" onkeyup="cariDosens()" placeholder="Cari nama dosen pria..">'
     f.puts '<table id="tableDosensPria">'
     dosens_pria.each.with_index(1) do |dosen, index|
       f.puts '<tr>'
@@ -107,7 +107,7 @@ def scraper
     f.puts '<div id="tab3" class="tabcontent">'
     f.puts '<h2>Daftar Dosen Wanita</h2>'
     f.puts "<p style='margin-top:-12px;'>Jumlah Dosen Wanita: #{dosens_wanita.size} orang</p>"
-    f.puts '<input type="text" id="inputDosensWanita" onkeyup="cariDosensWanita()" placeholder="Cari nama dosen wanita..">'
+    f.puts '<input type="text" id="inputDosensWanita" onkeyup="cariDosens()" placeholder="Cari nama dosen wanita..">'
     f.puts '<table id="tableDosensWanita">'
     dosens_wanita.each.with_index(1) do |dosen, index|
       f.puts '<tr>'
@@ -212,7 +212,10 @@ def scraper
 
     // Sumber: https://www.w3schools.com/howto/howto_js_filter_table.asp
     function cariDosens() {
-      var input, filter, table, tr, td, i, txtValue;
+      var input, filter, table, tr,
+          inputPria, filterPria, tablePria, trPria,
+          inputWanita, filterWanita, tableWanita, trWanita,
+          td, i, txtValue;
       input = document.getElementById("inputDosens");
       filter = input.value.toUpperCase();
       table = document.getElementById("tableDosens");
@@ -228,41 +231,33 @@ def scraper
           }
         }
       }
-    }
-
-    function cariDosensPria() {
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("inputDosensPria");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("tableDosensPria");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
+      inputPria = document.getElementById("inputDosensPria");
+      filterPria = inputPria.value.toUpperCase();
+      tablePria = document.getElementById("tableDosensPria");
+      trPria = tablePria.getElementsByTagName("tr");
+      for (i = 0; i < trPria.length; i++) {
+        td = trPria[i].getElementsByTagName("td")[0];
         if (td) {
           txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
+          if (txtValue.toUpperCase().indexOf(filterPria) > -1) {
+            trPria[i].style.display = "";
           } else {
-            tr[i].style.display = "none";
+            trPria[i].style.display = "none";
           }
         }
       }
-    }
-
-    function cariDosensWanita() {
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("inputDosensWanita");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("tableDosensWanita");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
+      inputWanita = document.getElementById("inputDosensWanita");
+      filterWanita = inputWanita.value.toUpperCase();
+      tableWanita = document.getElementById("tableDosensWanita");
+      trWanita = tableWanita.getElementsByTagName("tr");
+      for (i = 0; i < trWanita.length; i++) {
+        td = trWanita[i].getElementsByTagName("td")[0];
         if (td) {
           txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
+          if (txtValue.toUpperCase().indexOf(filterWanita) > -1) {
+            trWanita[i].style.display = "";
           } else {
-            tr[i].style.display = "none";
+            trWanita[i].style.display = "none";
           }
         }
       }

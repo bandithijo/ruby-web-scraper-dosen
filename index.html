@@ -540,7 +540,7 @@
 <div id="tab2" class="tabcontent">
 <h2>Daftar Dosen Pria</h2>
 <p style='margin-top:-12px;'>Jumlah Dosen Pria: 78 orang</p>
-<input type="text" id="inputDosensPria" onkeyup="cariDosensPria()" placeholder="Cari nama dosen pria..">
+<input type="text" id="inputDosensPria" onkeyup="cariDosens()" placeholder="Cari nama dosen pria..">
 <table id="tableDosensPria">
 <tr>
 <td>Abdul Fatah</td>
@@ -859,7 +859,7 @@
 <div id="tab3" class="tabcontent">
 <h2>Daftar Dosen Wanita</h2>
 <p style='margin-top:-12px;'>Jumlah Dosen Wanita: 50 orang</p>
-<input type="text" id="inputDosensWanita" onkeyup="cariDosensWanita()" placeholder="Cari nama dosen wanita..">
+<input type="text" id="inputDosensWanita" onkeyup="cariDosens()" placeholder="Cari nama dosen wanita..">
 <table id="tableDosensWanita">
 <tr>
 <td>Alisa Alaina, S.E., M.M</td>
@@ -1156,7 +1156,10 @@
 
     // Sumber: https://www.w3schools.com/howto/howto_js_filter_table.asp
     function cariDosens() {
-      var input, filter, table, tr, td, i, txtValue;
+      var input, filter, table, tr,
+          inputPria, filterPria, tablePria, trPria,
+          inputWanita, filterWanita, tableWanita, trWanita,
+          td, i, txtValue;
       input = document.getElementById("inputDosens");
       filter = input.value.toUpperCase();
       table = document.getElementById("tableDosens");
@@ -1172,41 +1175,33 @@
           }
         }
       }
-    }
-
-    function cariDosensPria() {
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("inputDosensPria");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("tableDosensPria");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
+      inputPria = document.getElementById("inputDosensPria");
+      filterPria = inputPria.value.toUpperCase();
+      tablePria = document.getElementById("tableDosensPria");
+      trPria = tablePria.getElementsByTagName("tr");
+      for (i = 0; i < trPria.length; i++) {
+        td = trPria[i].getElementsByTagName("td")[0];
         if (td) {
           txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
+          if (txtValue.toUpperCase().indexOf(filterPria) > -1) {
+            trPria[i].style.display = "";
           } else {
-            tr[i].style.display = "none";
+            trPria[i].style.display = "none";
           }
         }
       }
-    }
-
-    function cariDosensWanita() {
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("inputDosensWanita");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("tableDosensWanita");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
+      inputWanita = document.getElementById("inputDosensWanita");
+      filterWanita = inputWanita.value.toUpperCase();
+      tableWanita = document.getElementById("tableDosensWanita");
+      trWanita = tableWanita.getElementsByTagName("tr");
+      for (i = 0; i < trWanita.length; i++) {
+        td = trWanita[i].getElementsByTagName("td")[0];
         if (td) {
           txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
+          if (txtValue.toUpperCase().indexOf(filterWanita) > -1) {
+            trWanita[i].style.display = "";
           } else {
-            tr[i].style.display = "none";
+            trWanita[i].style.display = "none";
           }
         }
       }
