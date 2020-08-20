@@ -7,12 +7,12 @@
 </head>
 <body>
 <h1>Daftar Dosen UM BPPN</h1>
-<p>Data terakhir diparsing: 2020-08-18</p>
+<p>Data terakhir diparsing: 2020-08-20</p>
 
-    <p>Made with ❤ by <a href="https://bandithijo.github.io">Rizqi Nur Assyaufi</a> - 2020/07/12<br>
-    Powered by <a href="http://ruby-lang.org">Ruby</a> |
-    Source Code on <a href="https://github.com/bandithijo/ruby-web-scraper-dosen">GitHub</a></p>
-    
+      <p>Made with ❤ by <a href="https://bandithijo.github.io">Rizqi Nur Assyaufi</a> - 2020/07/12<br>
+      Powered by <a href="http://ruby-lang.org">Ruby</a> |
+      Source Code on <a href="https://github.com/bandithijo/ruby-web-scraper-dosen">GitHub</a></p>
+      
 <div class="tab">
 <button class='tablinks' onclick="openTab(event, 'tab1')">Semua Dosen</button>
 <button class='tablinks' onclick="openTab(event, 'tab2')">Dosen Pria</button>
@@ -1064,149 +1064,149 @@
 </table>
 </div>
 
-    <style>
-    :root {
-      --fg-color: #000;
-      --bg-color: #fff;
-      --a-color: #0000ff;
-    }
-    ::placeholder {
-      color: var(--fg-color);
-      opacity: 0.5;
-    }
-    body {
-      background-color: var(--bg-color);
-      color: var(--fg-color);
-      font-family: Arial;
-      font-size: 12px;
-    }
-    a, a:visited {
-      color: var(--a-color);
-    }
-    table,th,td {
-      border: 1px solid var(--fg-color);
-      border-collapse: collapse;
-    }
-    td {
-      padding: 3px;
-    }
-    td:nth-child(2) {
-      font-family: monospace;
-      text-align: center;
-    }
-    .tab {
-      overflow: hidden;
-    }
-    .tab button {
-      background-color: inherit;
-      float: left;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      padding: 5px 5px 5px 0;
-      transition: 0.3s;
-      font-family: inherit;
-      font-size: inherit;
-      color: inherit;
-      margin-right: 10px;
-    }
-    .tab button.active {
-      text-decoration: underline;
-    }
-    .tabcontent {
-      display: none;
-    }
-    input:focus, textarea:focus, select:focus{
-      background-color: var(--bg-color);
-      color: var(--fg-color);
-      outline: none;
-    }
-    #inputDosens, #inputDosensPria, #inputDosensWanita {
-      background-color: var(--bg-color);
-      width: 30%;
-      padding: 0;
-      border: 1px solid var(--bg-color);
-      margin: 0 0 12px 0;
-      font-family: inherit;
-      font-size: 12px;
-    }
-    @media screen and (width: 360px) {
-      table, #inputDosens, #inputDosensPria, #inputDosensWanita {
-        width: 100%;
+      <style>
+      :root {
+        --fg-color: #000;
+        --bg-color: #fff;
+        --a-color: #0000ff;
       }
-    }
-    </style>
-    
+      ::placeholder {
+        color: var(--fg-color);
+        opacity: 0.5;
+      }
+      body {
+        background-color: var(--bg-color);
+        color: var(--fg-color);
+        font-family: Arial;
+        font-size: 12px;
+      }
+      a, a:visited {
+        color: var(--a-color);
+      }
+      table,th,td {
+        border: 1px solid var(--fg-color);
+        border-collapse: collapse;
+      }
+      td {
+        padding: 3px;
+      }
+      td:nth-child(2) {
+        font-family: monospace;
+        text-align: center;
+      }
+      .tab {
+        overflow: hidden;
+      }
+      .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 5px 5px 5px 0;
+        transition: 0.3s;
+        font-family: inherit;
+        font-size: inherit;
+        color: inherit;
+        margin-right: 10px;
+      }
+      .tab button.active {
+        text-decoration: underline;
+      }
+      .tabcontent {
+        display: none;
+      }
+      input:focus, textarea:focus, select:focus{
+        background-color: var(--bg-color);
+        color: var(--fg-color);
+        outline: none;
+      }
+      #inputDosens, #inputDosensPria, #inputDosensWanita {
+        background-color: var(--bg-color);
+        width: 30%;
+        padding: 0;
+        border: 1px solid var(--bg-color);
+        margin: 0 0 12px 0;
+        font-family: inherit;
+        font-size: 12px;
+      }
+      @media screen and (width: 360px) {
+        table, #inputDosens, #inputDosensPria, #inputDosensWanita {
+          width: 100%;
+        }
+      }
+      </style>
+      
 
-    <script>
-    // Sumber: https://www.w3schools.com/howto/howto_js_tabs.asp
-    function openTab(evt, tabNumber) {
-      var i, tabcontent, tablinks;
-      tabcontent = document.getElementsByClassName("tabcontent");
-      for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+      <script>
+      // Sumber: https://www.w3schools.com/howto/howto_js_tabs.asp
+      function openTab(evt, tabNumber) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabNumber).style.display = "block";
+        evt.currentTarget.className += " active";
       }
-      tablinks = document.getElementsByClassName("tablinks");
-      for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-      }
-      document.getElementById(tabNumber).style.display = "block";
-      evt.currentTarget.className += " active";
-    }
 
-    // Sumber: https://www.w3schools.com/howto/howto_js_filter_table.asp
-    function cariDosens() {
-      var input, filter, table, tr,
-          inputPria, filterPria, tablePria, trPria,
-          inputWanita, filterWanita, tableWanita, trWanita,
-          td, i, txtValue;
-      input = document.getElementById("inputDosens");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("tableDosens");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
+      // Sumber: https://www.w3schools.com/howto/howto_js_filter_table.asp
+      function cariDosens() {
+        var input, filter, table, tr,
+            inputPria, filterPria, tablePria, trPria,
+            inputWanita, filterWanita, tableWanita, trWanita,
+            td, i, txtValue;
+        input = document.getElementById("inputDosens");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tableDosens");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[0];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+        inputPria = document.getElementById("inputDosensPria");
+        filterPria = inputPria.value.toUpperCase();
+        tablePria = document.getElementById("tableDosensPria");
+        trPria = tablePria.getElementsByTagName("tr");
+        for (i = 0; i < trPria.length; i++) {
+          td = trPria[i].getElementsByTagName("td")[0];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filterPria) > -1) {
+              trPria[i].style.display = "";
+            } else {
+              trPria[i].style.display = "none";
+            }
+          }
+        }
+        inputWanita = document.getElementById("inputDosensWanita");
+        filterWanita = inputWanita.value.toUpperCase();
+        tableWanita = document.getElementById("tableDosensWanita");
+        trWanita = tableWanita.getElementsByTagName("tr");
+        for (i = 0; i < trWanita.length; i++) {
+          td = trWanita[i].getElementsByTagName("td")[0];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filterWanita) > -1) {
+              trWanita[i].style.display = "";
+            } else {
+              trWanita[i].style.display = "none";
+            }
           }
         }
       }
-      inputPria = document.getElementById("inputDosensPria");
-      filterPria = inputPria.value.toUpperCase();
-      tablePria = document.getElementById("tableDosensPria");
-      trPria = tablePria.getElementsByTagName("tr");
-      for (i = 0; i < trPria.length; i++) {
-        td = trPria[i].getElementsByTagName("td")[0];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filterPria) > -1) {
-            trPria[i].style.display = "";
-          } else {
-            trPria[i].style.display = "none";
-          }
-        }
-      }
-      inputWanita = document.getElementById("inputDosensWanita");
-      filterWanita = inputWanita.value.toUpperCase();
-      tableWanita = document.getElementById("tableDosensWanita");
-      trWanita = tableWanita.getElementsByTagName("tr");
-      for (i = 0; i < trWanita.length; i++) {
-        td = trWanita[i].getElementsByTagName("td")[0];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filterWanita) > -1) {
-            trWanita[i].style.display = "";
-          } else {
-            trWanita[i].style.display = "none";
-          }
-        }
-      }
-    }
-    </script>
-    
+      </script>
+      
 </body>
 </html>

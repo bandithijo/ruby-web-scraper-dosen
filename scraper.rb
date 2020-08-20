@@ -1,278 +1,53 @@
-require 'httparty'
-require 'nokogiri'
-require 'byebug'
-require 'date'
+class Scraper
 
-def scraper
-  target_url = "http://baak.universitasmulia.ac.id/dosen/"
-  unparsed_page = HTTParty.get(target_url)
-  parsed_page = Nokogiri::HTML(unparsed_page)
+  attr_reader :parsed_page, :gender
+  attr_writer :dosens
 
-  # daftar semua dosen
-  dosens = Array.new
-  dosen_listings = parsed_page.css('div.elementor-widget-wrap p')
-  dosen_listings[1..-2].each do |dosen_list|
-    nama_nidn_dosen = dosen_list&.text&.gsub(/(^\w.*?:)|(NIDN :\s)/, "").strip
-    dosen = {
-      nama_dosen: nama_nidn_dosen&.gsub(/[^A-Za-z.,’ ]/i, ''),
-      nidn_dosen: nama_nidn_dosen&.gsub(/[^0-9]/i, '')
-    }
-    if dosen[:nama_dosen] != nil
-      dosens << dosen
-    end
+  def initialize(parsed_page)
+    @parsed_page = parsed_page
   end
 
-  # daftar dosen pria
-  dosens_pria = Array.new
-  dosen_pria_listings = parsed_page.css('div.elementor-widget-wrap')[9].css('p')
-  dosen_pria_listings.each do |dosen_pria_list|
-    nama_nidn_dosen_pria = dosen_pria_list&.text&.gsub(/(^\w.*?:)|(NIDN :\s)/, "").strip
-    dosen = {
-      nama_dosen_pria: nama_nidn_dosen_pria&.gsub(/[^A-Za-z., ]/i, ''),
-      nidn_dosen_pria: nama_nidn_dosen_pria&.gsub(/[^0-9]/i, '')
-    }
-    if dosen[:nama_dosen_pria] != nil
-      dosens_pria << dosen
+  def fetch_all
+    dosens = Array.new
+    dosen_listings = @parsed_page.css('div.elementor-widget-wrap p')
+    dosen_listings[1..-2].each do |dosen_list|
+      nama_nidn_dosen = dosen_list&.text&.gsub(/(^\w.*?:)|(NIDN :\s)/, "").strip
+      dosen = {
+        nama_dosen: nama_nidn_dosen&.gsub(/[^A-Za-z.,’ ]/i, ''),
+        nidn_dosen: nama_nidn_dosen&.gsub(/[^0-9]/i, '')
+      }
+
+      if dosen[:nama_dosen] != nil
+        dosens << dosen
+      end
     end
+
+    return dosens
   end
 
-  # daftar dosen wanita
-  dosens_wanita = Array.new
-  dosen_wanita_listings = parsed_page.css('div.elementor-widget-wrap')[10].css('p')
-  dosen_wanita_listings.each do |dosen_wanita_list|
-    nama_nidn_dosen_wanita = dosen_wanita_list&.text&.gsub(/(^\w.*?:)|(NIDN :\s)/, "").strip
-    dosen = {
-      nama_dosen_wanita: nama_nidn_dosen_wanita&.gsub(/[^A-Za-z., ]/i, ''),
-      nidn_dosen_wanita: nama_nidn_dosen_wanita&.gsub(/[^0-9]/i, '')
-    }
-    if dosen[:nama_dosen_wanita] != nil
-      dosens_wanita << dosen
+  def fetch_by_gender(gender)
+    if gender == 'pria'
+      index = 9
+    elsif gender == 'wanita'
+      index = 10
+    else
+      puts 'Gender Not Qualified!'
     end
+
+    dosens = Array.new
+    dosen_listings = @parsed_page.css('div.elementor-widget-wrap')[index].css('p')
+    dosen_listings.each do |dosen_list|
+      nama_nidn_dosen = dosen_list&.text&.gsub(/(^\w.*?:)|(NIDN :\s)/, "").strip
+      dosen = {
+        nama_dosen: nama_nidn_dosen&.gsub(/[^A-Za-z., ]/i, ''),
+        nidn_dosen: nama_nidn_dosen&.gsub(/[^0-9]/i, '')
+      }
+
+      if dosen[:nama_dosen]
+        dosens << dosen
+      end
+    end
+
+    return dosens
   end
-  # byebug
-
-  File.delete("daftar_dosen.html") if File.exist?("daftar_dosen.html")
-  File.open("daftar_dosen.html", "w") do |f|
-    f.puts '<!DOCTYPE html>'
-    f.puts '<html lang="en">'
-    f.puts '<head>'
-    f.puts '<meta charset="UTF-8">'
-    f.puts '<meta name="viewport" content="width=device-width, initial-scale=1">'
-    f.puts "<title>Daftar Dosen Universitas Mulia Balikpapan(#{dosens.count} dosen)</title>"
-    f.puts '</head>'
-    f.puts '<body>'
-    f.puts '<h1>Daftar Dosen UM BPPN</h1>'
-    f.puts "<p>Data terakhir diparsing: #{Date.today}</p>"
-
-    f.puts '''
-    <p>Made with ❤ by <a href="https://bandithijo.github.io">Rizqi Nur Assyaufi</a> - 2020/07/12<br>
-    Powered by <a href="http://ruby-lang.org">Ruby</a> |
-    Source Code on <a href="https://github.com/bandithijo/ruby-web-scraper-dosen">GitHub</a></p>
-    '''
-
-    f.puts '<div class="tab">'
-    f.puts "<button class='tablinks' onclick=\"openTab(event, 'tab1')\">Semua Dosen</button>"
-    f.puts "<button class='tablinks' onclick=\"openTab(event, 'tab2')\">Dosen Pria</button>"
-    f.puts "<button class='tablinks' onclick=\"openTab(event, 'tab3')\">Dosen Wanita</button>"
-    f.puts '</div>'
-
-    f.puts '<div id="tab1" class="tabcontent active">'
-    f.puts '<h2>Daftar Semua Dosen</h2>'
-    f.puts "<p style='margin-top:-12px;'>Jumlah Seluruh Dosen: #{dosens.size} orang</p>"
-    f.puts '<input type="text" id="inputDosens" onkeyup="cariDosens()" placeholder="Cari nama dosen..">'
-    f.puts '<table id="tableDosens">'
-    dosens.each.with_index(1) do |dosen, index|
-      f.puts '<tr>'
-      f.puts "<td>#{dosen[:nama_dosen]}</td>"
-      f.puts "<td>#{dosen[:nidn_dosen]}</td>"
-      f.puts '</tr>'
-    end
-    f.puts '</table>'
-    f.puts '</div>'
-
-    f.puts '<div id="tab2" class="tabcontent">'
-    f.puts '<h2>Daftar Dosen Pria</h2>'
-    f.puts "<p style='margin-top:-12px;'>Jumlah Dosen Pria: #{dosens_pria.size} orang</p>"
-    f.puts '<input type="text" id="inputDosensPria" onkeyup="cariDosens()" placeholder="Cari nama dosen pria..">'
-    f.puts '<table id="tableDosensPria">'
-    dosens_pria.each.with_index(1) do |dosen, index|
-      f.puts '<tr>'
-      f.puts "<td>#{dosen[:nama_dosen_pria]}</td>"
-      f.puts "<td>#{dosen[:nidn_dosen_pria]}</td>"
-      f.puts '</tr>'
-    end
-    f.puts '</table>'
-    f.puts '</div>'
-
-    f.puts '<div id="tab3" class="tabcontent">'
-    f.puts '<h2>Daftar Dosen Wanita</h2>'
-    f.puts "<p style='margin-top:-12px;'>Jumlah Dosen Wanita: #{dosens_wanita.size} orang</p>"
-    f.puts '<input type="text" id="inputDosensWanita" onkeyup="cariDosens()" placeholder="Cari nama dosen wanita..">'
-    f.puts '<table id="tableDosensWanita">'
-    dosens_wanita.each.with_index(1) do |dosen, index|
-      f.puts '<tr>'
-      f.puts "<td>#{dosen[:nama_dosen_wanita]}</td>"
-      f.puts "<td>#{dosen[:nidn_dosen_wanita]}</td>"
-      f.puts '</tr>'
-    end
-    f.puts '</table>'
-    f.puts '</div>'
-
-    f.puts '''
-    <style>
-    :root {
-      --fg-color: #000;
-      --bg-color: #fff;
-      --a-color: #0000ff;
-    }
-    ::placeholder {
-      color: var(--fg-color);
-      opacity: 0.5;
-    }
-    body {
-      background-color: var(--bg-color);
-      color: var(--fg-color);
-      font-family: Arial;
-      font-size: 12px;
-    }
-    a, a:visited {
-      color: var(--a-color);
-    }
-    table,th,td {
-      border: 1px solid var(--fg-color);
-      border-collapse: collapse;
-    }
-    td {
-      padding: 3px;
-    }
-    td:nth-child(2) {
-      font-family: monospace;
-      text-align: center;
-    }
-    .tab {
-      overflow: hidden;
-    }
-    .tab button {
-      background-color: inherit;
-      float: left;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      padding: 5px 5px 5px 0;
-      transition: 0.3s;
-      font-family: inherit;
-      font-size: inherit;
-      color: inherit;
-      margin-right: 10px;
-    }
-    .tab button.active {
-      text-decoration: underline;
-    }
-    .tabcontent {
-      display: none;
-    }
-    input:focus, textarea:focus, select:focus{
-      background-color: var(--bg-color);
-      color: var(--fg-color);
-      outline: none;
-    }
-    #inputDosens, #inputDosensPria, #inputDosensWanita {
-      background-color: var(--bg-color);
-      width: 30%;
-      padding: 0;
-      border: 1px solid var(--bg-color);
-      margin: 0 0 12px 0;
-      font-family: inherit;
-      font-size: 12px;
-    }
-    @media screen and (width: 360px) {
-      table, #inputDosens, #inputDosensPria, #inputDosensWanita {
-        width: 100%;
-      }
-    }
-    </style>
-    '''
-
-    f.puts '''
-    <script>
-    // Sumber: https://www.w3schools.com/howto/howto_js_tabs.asp
-    function openTab(evt, tabNumber) {
-      var i, tabcontent, tablinks;
-      tabcontent = document.getElementsByClassName("tabcontent");
-      for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-      }
-      tablinks = document.getElementsByClassName("tablinks");
-      for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-      }
-      document.getElementById(tabNumber).style.display = "block";
-      evt.currentTarget.className += " active";
-    }
-
-    // Sumber: https://www.w3schools.com/howto/howto_js_filter_table.asp
-    function cariDosens() {
-      var input, filter, table, tr,
-          inputPria, filterPria, tablePria, trPria,
-          inputWanita, filterWanita, tableWanita, trWanita,
-          td, i, txtValue;
-      input = document.getElementById("inputDosens");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("tableDosens");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
-      inputPria = document.getElementById("inputDosensPria");
-      filterPria = inputPria.value.toUpperCase();
-      tablePria = document.getElementById("tableDosensPria");
-      trPria = tablePria.getElementsByTagName("tr");
-      for (i = 0; i < trPria.length; i++) {
-        td = trPria[i].getElementsByTagName("td")[0];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filterPria) > -1) {
-            trPria[i].style.display = "";
-          } else {
-            trPria[i].style.display = "none";
-          }
-        }
-      }
-      inputWanita = document.getElementById("inputDosensWanita");
-      filterWanita = inputWanita.value.toUpperCase();
-      tableWanita = document.getElementById("tableDosensWanita");
-      trWanita = tableWanita.getElementsByTagName("tr");
-      for (i = 0; i < trWanita.length; i++) {
-        td = trWanita[i].getElementsByTagName("td")[0];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filterWanita) > -1) {
-            trWanita[i].style.display = "";
-          } else {
-            trWanita[i].style.display = "none";
-          }
-        }
-      }
-    }
-    </script>
-    '''
-
-    f.puts '</body>'
-    f.puts '</html>'
-  end
-
-  puts "TOTAL SELURUH DOSEN : #{dosens.count} orang"
-  puts "TOTAL DOSEN PRIA    : #{dosens_pria.count} orang"
-  puts "TOTAL DOSEN WANITA  : #{dosens_wanita.count} orang"
 end
-
-scraper
-puts "index.html created!" if %x(cp -f daftar_dosen.html index.html)
