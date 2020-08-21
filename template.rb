@@ -31,9 +31,9 @@ class Template
       '''
 
       f.puts '<div class="tab">'
-      f.puts "<button class='tablinks' onclick=\"openTab(event, 'tab1')\">Semua Dosen</button>"
-      f.puts "<button class='tablinks' onclick=\"openTab(event, 'tab2')\">Dosen Pria</button>"
-      f.puts "<button class='tablinks' onclick=\"openTab(event, 'tab3')\">Dosen Wanita</button>"
+      ['Semua Dosen', 'Dosen Pria', 'Dosen Wanita'].each.with_index(1) do |dosen, index|
+        f.puts "<button class='tablinks' onclick=\"openTab(event, 'tab#{index}')\">#{dosen}</button>"
+      end
       f.puts '</div>'
 
       f.puts '<div id="tab1" class="tabcontent active">'
@@ -230,6 +230,4 @@ class Template
     end
   end
 
-  # Create index.html from daftar_dosen.html for rendering on netlify & vercel
-  %x(cp -f daftar_dosen.html index.html)
 end

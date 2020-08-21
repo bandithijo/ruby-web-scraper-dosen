@@ -35,3 +35,6 @@ def main
 end
 
 main
+
+# Create index.html from daftar_dosen.html for rendering on netlify & vercel
+%x(cp -f daftar_dosen.html index.html)
