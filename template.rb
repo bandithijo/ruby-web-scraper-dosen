@@ -1,5 +1,6 @@
-class Template
+# frozen_string_literal: true
 
+class Template
   require 'date'
 
   attr_accessor :dosens, :dosens_pria, :dosens_wanita
@@ -11,24 +12,24 @@ class Template
   end
 
   def create_html
-    File.delete("daftar_dosen.html") if File.exist?("daftar_dosen.html")
-    File.open("daftar_dosen.html", "w") do |f|
-      f.puts '<!DOCTYPE html>'
-      f.puts '<html lang="en">'
-      f.puts '<head>'
-      f.puts '<meta charset="UTF-8">'
-      f.puts '<meta name="viewport" content="width=device-width, initial-scale=1">'
-      f.puts "<title>Daftar Dosen Universitas Mulia Balikpapan(#{dosens.count} dosen)</title>"
-      f.puts '</head>'
-      f.puts '<body>'
-      f.puts '<h1>Daftar Dosen UM BPPN</h1>'
-      f.puts "<p>Data terakhir diparsing: #{Date.today}</p>"
+    File.delete('daftar_dosen.html') if File.exist?('daftar_dosen.html')
+    File.open('daftar_dosen.html', 'w') do |f|
+      f.puts """
+      <!DOCTYPE html>
+      <html lang='en'>
+      <head>
+      <meta charset='UTF-8'>
+      <meta name='viewport' content='width=device-width, initial-scale=1'>
+      <title>Daftar Dosen Universitas Mulia Balikpapan(#{dosens.count} dosen)</title>
+      </head>
+      <body>
+      <h1>Daftar Dosen UM BPPN</h1>
+      <p>Data terakhir diparsing: #{Date.today}</p>
 
-      f.puts '''
-      <p>Made with ❤ by <a href="https://bandithijo.github.io">Rizqi Nur Assyaufi</a> - 2020/07/12<br>
-      Powered by <a href="http://ruby-lang.org">Ruby</a> |
-      Source Code on <a href="https://github.com/bandithijo/ruby-web-scraper-dosen">GitHub</a></p>
-      '''
+      <p>Made with ❤ by <a href='https://bandithijo.github.io'>Rizqi Nur Assyaufi</a> - 2020/07/12<br>
+      Powered by <a href='http://ruby-lang.org'>Ruby</a> |
+      Source Code on <a href='https://github.com/bandithijo/ruby-web-scraper-dosen'>GitHub</a></p>
+      """
 
       f.puts '<div class="tab">'
       ['Semua Dosen', 'Dosen Pria', 'Dosen Wanita'].each.with_index(1) do |dosen, index|
@@ -41,7 +42,7 @@ class Template
       f.puts "<p style='margin-top:-12px;'>Jumlah Seluruh Dosen: #{dosens.size} orang</p>"
       f.puts '<input type="text" id="inputDosens" onkeyup="cariDosens()" placeholder="Cari nama dosen..">'
       f.puts '<table id="tableDosens">'
-      dosens.each.with_index(1) do |dosen, index|
+      dosens.each do |dosen|
         f.puts '<tr>'
         f.puts "<td>#{dosen[:nama_dosen]}</td>"
         f.puts "<td>#{dosen[:nidn_dosen]}</td>"
@@ -55,7 +56,7 @@ class Template
       f.puts "<p style='margin-top:-12px;'>Jumlah Dosen Pria: #{dosens_pria.size} orang</p>"
       f.puts '<input type="text" id="inputDosensPria" onkeyup="cariDosens()" placeholder="Cari nama dosen pria..">'
       f.puts '<table id="tableDosensPria">'
-      dosens_pria.each.with_index(1) do |dosen, index|
+      dosens_pria.each do |dosen|
         f.puts '<tr>'
         f.puts "<td>#{dosen[:nama_dosen]}</td>"
         f.puts "<td>#{dosen[:nidn_dosen]}</td>"
@@ -69,7 +70,7 @@ class Template
       f.puts "<p style='margin-top:-12px;'>Jumlah Dosen Wanita: #{dosens_wanita.size} orang</p>"
       f.puts '<input type="text" id="inputDosensWanita" onkeyup="cariDosens()" placeholder="Cari nama dosen wanita..">'
       f.puts '<table id="tableDosensWanita">'
-      dosens_wanita.each.with_index(1) do |dosen, index|
+      dosens_wanita.each do |dosen|
         f.puts '<tr>'
         f.puts "<td>#{dosen[:nama_dosen]}</td>"
         f.puts "<td>#{dosen[:nidn_dosen]}</td>"
@@ -207,5 +208,4 @@ class Template
       f.puts '</html>'
     end
   end
-
 end
