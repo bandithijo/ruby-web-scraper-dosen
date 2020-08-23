@@ -1,19 +1,13 @@
+# frozen_string_literal: true
+
 require 'httparty'
 require 'nokogiri'
 require 'byebug'
 require_relative './scraper'
 require_relative './template'
 
-def main
-  begin
-    target_url = "http://baak.universitasmulia.ac.id/dosen/"
-    unparsed_page = HTTParty.get(target_url)
-  rescue SocketError
-    puts "ERROR: Target URL tidak dikenal (salah alamat)"
-    exit
-  end
-
-  parsed_page = Nokogiri::HTML(unparsed_page)
+def main_scraper
+  parsed_page = get_target_url('http://baak.universitasmulia.ac.id/dosen/')
 
   # daftar semua dosen
   dosens = Scraper.new(parsed_page).fetch_all
@@ -34,7 +28,16 @@ def main
   puts "TOTAL DOSEN WANITA  : #{dosens_wanita.count} orang"
 end
 
-main
+def get_target_url(target_url)
+  target_url = target_url
+  unparsed_page = HTTParty.get(target_url)
+  Nokogiri::HTML(unparsed_page)
+rescue SocketError
+  puts 'ERROR: Target URL tidak dikenal (salah alamat)'
+  exit
+end
+
+main_scraper
 
 # Create index.html from daftar_dosen.html for rendering on netlify & vercel
-%x(cp -f daftar_dosen.html index.html)
+%x(`cp -f daftar_dosen.html index.html`)
