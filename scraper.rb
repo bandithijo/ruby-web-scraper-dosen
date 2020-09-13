@@ -11,7 +11,7 @@ class Scraper
   def fetch_all
     dosens = []
     dosen_listings = @parsed_page.css('div.elementor-widget-wrap p')
-    dosen_listings[1..-2].each do |dosen_list|
+    dosen_listings[1..-10].each do |dosen_list|
       nama_nidn_dosen = dosen_list&.text&.gsub(/(^\w.*?:)|(NIDN :\s)/, '')&.strip
       dosen = {
         nama_dosen: nama_nidn_dosen&.gsub(/[^A-Za-z.,’ ]/i, ''),
