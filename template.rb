@@ -23,16 +23,13 @@ class Template
       <title>Dosen Universitas Mulia Balikpapan(#{dosens.count} dosen)</title>
       </head>
       <body>
-      <h1>Dosen Univ. Mulia Balikpapan</h1>
-      <p>Data terakhir diparsing: #{Date.today}</p>
+      <h1 style='margin-bottom:0;'>Dosen Univ. Mulia Balikpapan</h1>
 
-      <p>Made with ❤ by <a href='https://bandithijo.github.io'>Rizqi Nur Assyaufi</a> - 2020/07/12<br>
+      <p style='margin-top:5px;'>Made with ❤ by <a href='https://bandithijo.github.io'>Rizqi Nur Assyaufi</a> - 2020/07/12<br>
       Powered by <a href='http://ruby-lang.org'>Ruby</a> |
       Source Code on <a href='https://github.com/bandithijo/ruby-web-scraper-dosen'>GitHub</a></p>
 
-      <div class='hidden'>
-      <p>*Klik salah satu dari tiga daftar kategori dosen di bawah.</p>
-      </div>
+      <p>Data terakhir diparsing: #{Date.today}</p>
       """
 
       f.puts '<div class="tab">'
@@ -44,7 +41,7 @@ class Template
       f.puts '<div id="tab1" class="tabcontent active">'
       f.puts '<h2>Daftar Semua Dosen</h2>'
       f.puts "<p style='margin-top:-12px;'>Jumlah Seluruh Dosen: #{dosens.size} orang</p>"
-      f.puts '<input type="text" id="inputDosens" onkeyup="cariDosens()" placeholder="Cari nama dosen..">'
+      f.puts '<input type="text" id="inputDosens" onkeyup="cariDosens()" placeholder="Cari nama dosen...">'
       f.puts '<table id="tableDosens">'
       dosens.each do |dosen|
         f.puts '<tr>'
@@ -58,7 +55,7 @@ class Template
       f.puts '<div id="tab2" class="tabcontent">'
       f.puts '<h2>Daftar Dosen Pria</h2>'
       f.puts "<p style='margin-top:-12px;'>Jumlah Dosen Pria: #{dosens_pria.size} orang</p>"
-      f.puts '<input type="text" id="inputDosensPria" onkeyup="cariDosens()" placeholder="Cari nama dosen pria..">'
+      f.puts '<input type="text" id="inputDosensPria" onkeyup="cariDosens()" placeholder="Cari nama dosen pria...">'
       f.puts '<table id="tableDosensPria">'
       dosens_pria.each do |dosen|
         f.puts '<tr>'
@@ -72,7 +69,7 @@ class Template
       f.puts '<div id="tab3" class="tabcontent">'
       f.puts '<h2>Daftar Dosen Wanita</h2>'
       f.puts "<p style='margin-top:-12px;'>Jumlah Dosen Wanita: #{dosens_wanita.size} orang</p>"
-      f.puts '<input type="text" id="inputDosensWanita" onkeyup="cariDosens()" placeholder="Cari nama dosen wanita..">'
+      f.puts '<input type="text" id="inputDosensWanita" onkeyup="cariDosens()" placeholder="Cari nama dosen wanita...">'
       f.puts '<table id="tableDosensWanita">'
       dosens_wanita.each do |dosen|
         f.puts '<tr>'
@@ -82,6 +79,18 @@ class Template
       end
       f.puts '</table>'
       f.puts '</div>'
+
+      f.puts '''
+      <div class="petunjuk">
+      <b>PETUNJUK:</b>
+      <p style="margin-top:0;">Klik salah satu dari tiga daftar kategori dosen di atas.</p>
+      </div>
+
+      <div class="footnote">
+      <b>INFO:</b>
+      <p style="margin-top:0;">Apabila terdapat kesalahan dalam penulisan / gelar milik dosen yang tidak lengkap / nama dosen bersangkutan tidak terdaftar, harap melaporkan kesalahan dan kekeliruan tersebut ke bagian BAAK untuk kami lakukan perubahan.</p>
+      </div>
+      '''
 
       f.puts '''
       <style>
@@ -150,8 +159,23 @@ class Template
         font-family: inherit;
         font-size: 12px;
       }
+      .petunjuk {
+        margin-top: 15px;
+        text-align: left;
+      }
+      .footnote {
+        margin-top: 15px;
+        text-align: left;
+        width: 33%;
+        word-wrap: break-word;
+      }
       @media screen and (width: 360px) {
         table, #inputDosens, #inputDosensPria, #inputDosensWanita {
+          width: 100%;
+        }
+      }
+      @media screen and (max-width: 768px) {
+        .footnote {
           width: 100%;
         }
       }
