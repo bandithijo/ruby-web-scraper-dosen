@@ -1,13 +1,12 @@
 #!/usr/bin/env ruby
 
-require 'httparty'
-require 'nokogiri'
 require 'byebug'
 require_relative './scraper'
+require_relative './target'
 require_relative './template'
 
 def main_scraper
-  parsed_page = get_target_url('http://baak.universitasmulia.ac.id/dosen/')
+  parsed_page = Target.get_target_url('http://baak.universitasmulia.ac.id/dosen/')
 
   # daftar semua dosen
   dosens = Scraper.new(parsed_page).fetch_all
@@ -26,16 +25,6 @@ def main_scraper
   puts "TOTAL SELURUH DOSEN : #{dosens.count} orang"
   puts "TOTAL DOSEN PRIA    : #{dosens_pria.count} orang"
   puts "TOTAL DOSEN WANITA  : #{dosens_wanita.count} orang"
-end
-
-def get_target_url(target_url)
-  target_url = target_url
-  response = HTTParty.get(target_url)
-  unparsed_page = response.body
-  Nokogiri::HTML(unparsed_page)
-rescue SocketError
-  puts 'ERROR: Target URL tidak dikenal (salah alamat)'
-  exit
 end
 
 main_scraper
