@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -W0
+#!/usr/bin/env ruby
 
 require 'httparty'
 require 'nokogiri'
@@ -30,7 +30,8 @@ end
 
 def get_target_url(target_url)
   target_url = target_url
-  unparsed_page = HTTParty.get(target_url)
+  response = HTTParty.get(target_url)
+  unparsed_page = response.body
   Nokogiri::HTML(unparsed_page)
 rescue SocketError
   puts 'ERROR: Target URL tidak dikenal (salah alamat)'
