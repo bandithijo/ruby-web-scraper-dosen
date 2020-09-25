@@ -12,5 +12,8 @@ class Target
   rescue SocketError
     puts 'ERROR: Target URL tidak dikenal (salah alamat)'
     exit
+  rescue Errno::ENETUNREACH
+    puts 'ERROR: Server tidak memberikan respon apapun'
+    exit
   end
 end
