@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby -W0
 
 require 'httparty'
 require 'nokogiri'

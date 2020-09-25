@@ -20,15 +20,19 @@ class Template
       <head>
       <meta charset='UTF-8'>
       <meta name='viewport' content='width=device-width, initial-scale=1'>
-      <title>Daftar Dosen Universitas Mulia Balikpapan(#{dosens.count} dosen)</title>
+      <title>Dosen Universitas Mulia Balikpapan(#{dosens.count} dosen)</title>
       </head>
       <body>
-      <h1>Daftar Dosen UM BPPN</h1>
+      <h1>Dosen Univ. Mulia Balikpapan</h1>
       <p>Data terakhir diparsing: #{Date.today}</p>
 
       <p>Made with ❤ by <a href='https://bandithijo.github.io'>Rizqi Nur Assyaufi</a> - 2020/07/12<br>
       Powered by <a href='http://ruby-lang.org'>Ruby</a> |
       Source Code on <a href='https://github.com/bandithijo/ruby-web-scraper-dosen'>GitHub</a></p>
+
+      <div class='hidden'>
+      <p>*Klik salah satu dari tiga daftar kategori dosen di bawah.</p>
+      </div>
       """
 
       f.puts '<div class="tab">'
