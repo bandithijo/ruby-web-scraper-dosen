@@ -6,16 +6,6 @@ require_relative '../target.rb'
 target_url = 'http://baak.universitasmulia.ac.id/dosen/'
 parsed_page = Target.get_target_url(target_url)
 
-describe Target do
-  describe 'get_target_url' do
-    context 'get the response from target url' do
-      it 'resturns Nokogiri::HTML::Document' do
-        expect(parsed_page.class).to eq(Nokogiri::HTML::Document)
-      end
-    end
-  end
-end
-
 describe Scraper do
   describe '.fetch_all' do
     context 'fetching all dosens data' do
@@ -47,7 +37,7 @@ describe Scraper do
   end
 
   describe '.fetch_by_gender' do
-    context 'fetching all dosens data by gender' do
+    context 'fetching all dosens pria data by gender' do
       it 'returns array of dosens pria' do
         expect(Scraper.new(parsed_page).fetch_by_gender('pria').class)
           .to eq(Array)
@@ -72,7 +62,9 @@ describe Scraper do
         expect(Scraper.new(parsed_page).fetch_by_gender('pria').last[:nidn_dosen])
           .to match(/[0-9]/)
       end
+    end
 
+    context 'fetching all dosens wanita data by gender' do
       it 'returns array of dosens wanita' do
         expect(Scraper.new(parsed_page).fetch_by_gender('wanita').class)
           .to eq(Array)
