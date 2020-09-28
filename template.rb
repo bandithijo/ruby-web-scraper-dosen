@@ -83,19 +83,19 @@ class Template
       f.puts '''
       <div class="petunjuk">
       <b>🎯 PETUNJUK</b>
-      <p style="margin-top:0;">Klik salah satu dari tiga daftar kategori dosen di atas.</p>
+      <p style="margin-top:2px;">Klik salah satu dari tiga daftar kategori dosen di atas.</p>
       </div>
 
       <br>
 
       <div class="footnote">
       <b>📢 INFO</b>
-      <p style="margin-top:0;">Apabila terdapat kesalahan dalam penulisan / gelar milik dosen yang tidak lengkap / nama dosen bersangkutan tidak terdaftar, harap melaporkan kesalahan dan kekeliruan tersebut ke bagian BAAK untuk kami lakukan perubahan.</p>
+      <p style="margin-top:2px;">Apabila terdapat kesalahan dalam penulisan / gelar milik dosen yang tidak lengkap / nama dosen bersangkutan tidak terdaftar, harap melaporkan kesalahan dan kekeliruan tersebut ke bagian BAAK untuk kami lakukan perubahan.</p>
       </div>
 
       <div class="footnote">
       <b>📜 TENTANG</b>
-      <p style="margin-top:0;">Web aplikasi sederhana ini dibuat untuk tujuan belajar. Dibangun menggunakan teknik <i>web scraping</i> dengan data yang langsung diambil dari website target belajar. Program ditulis menggunakan bahasa pemrograman Ruby.</p>
+      <p style="margin-top:2px;">Web aplikasi sederhana ini dibuat untuk tujuan belajar. Dibangun menggunakan teknik <i>web scraping</i> dengan data yang langsung diambil dari website target belajar. Program ditulis menggunakan bahasa pemrograman Ruby.</p>
       </div>
       '''
 
